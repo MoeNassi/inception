@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+    nginx:
+      image: nginx
+      build: ./requirements/nginx
+      container_name: ngi_cont
+      ports:
+        - 443:443
+      env_file:
+        - .env
+      volumes:
+        - wordpress: /var/www/html
+      restart: always
+      
+    mariadb:
+      image: mariadb
+      build: ./requirements/mariadb
+      container_name: maria_cont
+      ports:
+        - 6700
+      env_file:
+        - .env
+      volumes:
+        - mariadb: /var/lib/mysql
+      restart: always
+
+    wordpress:
+      image: nginx
+      build: ./requirements/wordpress/.
+      container_name: ngi_cont
+      env_file:
+        - .env
+      volumes:
+        - wordpress: /var/www/html
+      restart: always
+
+volumes:
+  wordpress:
+    o: bind
+    type: none
+    device: /Users/mnassi/Desktop/1337/inception/srcs/wordpress_v
+  mariadb:
+    o: bind
+    type: none
+    device: /Users/mnassi/Desktop/1337/inception/srcs/volumes
+
+network:
+  moulSwa:
+    driver: bridge
