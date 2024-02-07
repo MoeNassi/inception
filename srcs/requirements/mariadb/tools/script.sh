@@ -1,14 +1,10 @@
-#!/bin/bash
+#!/bin/sh
+mysql_install_db
+mysqld_safe  &
+sleep 5
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+echo  "CREATE DATABASE IF NOT EXISTS $DB_NAME; GRANT ALL ON $DB_NAME.* TO '$MY_SQL_USER'@'%' IDENTIFIED BY '$MY_SQL_PASS';" \
+     "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MY_SQL_PASS}';" "FLUSH PRIVILEGES;" | mysql -u root -p${MY_SQL_PASS}
 
-service mariadb start
-
-mariadb -e "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\`;"
-mariadb -e "CREATE USER IF NOT EXISTS '$MY_SQL_USER'@'%' IDENTIFIED BY '$MY_SQL_PASS';"
-mariadb -e "GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$MY_SQL_USER'@'%';"
-mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MY_SQL_ROOTPASS' ;"
-
-mysqladmin -u root --password="$MY_SQL_ROOTPASS" shutdown
-
+mysqladmin shutdown -p${MY_SQL_PASS}
 mysqld_safe

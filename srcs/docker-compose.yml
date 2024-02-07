@@ -1,49 +1,58 @@
 version: "3.8"
 services:
     nginx:
-      image: nginx
+      image: nginx:1337
       build: ./requirements/nginx
-      container_name: ngi_cont
+      container_name: nginx
       ports:
         - 443:443
       env_file:
         - .env
       volumes:
-        - wordpress: /var/www/html
+        - wordpress_v:/var/www
       restart: always
-      
-    mariadb:
-      image: mariadb
-      build: ./requirements/mariadb
-      container_name: maria_cont
-      ports:
-        - 6700
-      env_file:
-        - .env
-      volumes:
-        - mariadb: /var/lib/mysql
-      restart: always
+      depends_on:
+        - wordpress
+      networks: 
+        - moulSwa
 
-    wordpress:
-      image: nginx
-      build: ./requirements/wordpress/.
-      container_name: ngi_cont
+    mariadb:
+      image: mariadb:1337
+      build: ./requirements/mariadb
+      container_name: mariadb
       env_file:
         - .env
       volumes:
-        - wordpress: /var/www/html
+        - mariadb_v:/var/lib/mysql
       restart: always
+      networks: 
+        - moulSwa
+        
+    wordpress:
+      image: wordpress:1337
+      build: ./requirements/wordpress
+      container_name: wordpress
+      env_file:
+        - .env
+      volumes:
+        - wordpress_v:/var/www
+      restart: always
+      depends_on:
+        - mariadb
+      networks: 
+        - moulSwa
 
 volumes:
-  wordpress:
-    o: bind
-    type: none
-    device: /Users/mnassi/Desktop/1337/inception/srcs/wordpress_v
-  mariadb:
-    o: bind
-    type: none
-    device: /Users/mnassi/Desktop/1337/inception/srcs/volumes
-
-network:
+  wordpress_v:
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/mnassi/Desktop/1337/inception/srcs/wordpress_v
+  mariadb_v:
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/mnassi/Desktop/1337/inception/srcs/layn3lkrk
+networks:
   moulSwa:
     driver: bridge
