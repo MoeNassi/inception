@@ -42,17 +42,42 @@ services:
       networks: 
         - moulSwa
 
+    static:
+      image: static:1337
+      build: ./requirements/bonus/static
+      container_name: static
+      env_file:
+        - .env
+      ports:
+        - 8200:8200
+      restart: always
+      networks: 
+        - moulSwa
+    
+    # adminer:
+    #   image: adminer:1337
+    #   build: ./requirements/bonus/adminer
+    #   container_name: adminer
+    #   env_file:
+    #     - .env
+    #   ports:
+    #     - 8080:8080
+    #   restart: always
+    #   networks:
+    #     - moulSwa
+
 volumes:
   wordpress_v:
     driver_opts:
       o: bind
       type: none
-      device: /Users/mnassi/Desktop/1337/inception/srcs/wordpress_v
+      device: /home/mnassi/Desktop/inception_/srcs/mariadb_v
   mariadb_v:
     driver_opts:
       o: bind
       type: none
-      device: /Users/mnassi/Desktop/1337/inception/srcs/layn3lkrk
+      device: /home/mnassi/Desktop/inception_/srcs/mariadb_v
 networks:
   moulSwa:
     driver: bridge
+

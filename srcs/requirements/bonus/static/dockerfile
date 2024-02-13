@@ -1,0 +1,9 @@
+FROM debian:oldstable
+
+RUN apt-get update -y && apt-get upgrade -y && apt-get install vim nginx -y
+
+COPY ./tools/conf.conf /etc/nginx/sites-available/default
+
+COPY ./tools/index.html /tmp/index.html
+
+CMD ["nginx", "-g", "daemon off;"]
