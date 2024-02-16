@@ -54,17 +54,19 @@ services:
       networks: 
         - moulSwa
     
-    # adminer:
-    #   image: adminer:1337
-    #   build: ./requirements/bonus/adminer
-    #   container_name: adminer
-    #   env_file:
-    #     - .env
-    #   ports:
-    #     - 8080:8080
-    #   restart: always
-    #   networks:
-    #     - moulSwa
+    adminer:
+      image: adminer:1337
+      build: ./requirements/bonus/adminer
+      container_name: adminer
+      env_file:
+        - .env
+      ports:
+        - 8080:8080
+      depends_on:
+        - mariadb
+      restart: always
+      networks:
+        - moulSwa
 
 volumes:
   wordpress_v:
