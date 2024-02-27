@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# touch /var/www/wp-config.php --allow-root
-
 wp core download --allow-root
 
 wp config create --dbname=$DB_NAME --dbuser=$MY_SQL_USER --dbpass=$MY_SQL_PASS --dbhost=$DB_HOST --allow-root

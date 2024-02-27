@@ -1,10 +1,4 @@
-vol_dir = /srcs/wordpress_v /srcs/mariadb_v
-
-$(vol_dir) :
-	mkdir -p $@
-	chmod 777 $@
-
-all : $(vol_dir)
+all : docker
 
 wordpress :
 	docker build ./srcs/requirements/wordpress -t wordpress
@@ -19,7 +13,7 @@ nginx :
 	docker run -d -p 8200:8200 nginx 
 
 docker :
-	docker-compose -f /home/mnassi/Desktop/inception_/srcs/docker-compose.yml up --build
+	docker-compose -f /Users/mnassi/Desktop/1337/inception/srcs/docker-compose.yml up --build
 
 show :
 	docker volume ls

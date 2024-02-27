@@ -73,12 +73,12 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/mnassi/Desktop/inception_/srcs/mariadb_v
+      device: /Users/mnassi/Desktop/1337/inception/srcs/wordpress_v
   mariadb_v:
     driver_opts:
       o: bind
       type: none
-      device: /home/mnassi/Desktop/inception_/srcs/mariadb_v
+      device: /Users/mnassi/Desktop/1337/inception/srcs/mariadb_v
 networks:
   moulSwa:
     driver: bridge
