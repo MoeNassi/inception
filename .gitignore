@@ -1,0 +1,5 @@
+./srcs/.env
+.gitignore
+.DS_Store
+./srcs/mariadb_v
+./srcs/wordpress_v
